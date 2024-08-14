@@ -9,8 +9,8 @@ function Location({ data, location, setLocation, imagesObject }) {
     }
   });
 
-  return (
-    <div className="card">
+  return cityObject ? (
+    <div className="current-location-card">
       <h2>Your Location's Weather</h2>
       <div className="img-container">
         <img
@@ -30,6 +30,8 @@ function Location({ data, location, setLocation, imagesObject }) {
         <h5 className="card-text">{cityObject.forecast}</h5>
       </div>
     </div>
+  ) : (
+    <h2 className="error-msg">This location is not in our database.</h2>
   );
 }
 

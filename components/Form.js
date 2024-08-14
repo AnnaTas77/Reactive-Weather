@@ -18,7 +18,12 @@ export default function Form({ location, setLocation }) {
       <form onSubmit={handleSubmit}>
         <label className="city">
           City:
-          <input type="text" value={typedLocation} onChange={handleLocation} />
+          <input
+            type="text"
+            value={typedLocation}
+            onChange={handleLocation}
+            required
+          />
         </label>
         <button className="btn btn-primary" type="submit">
           Submit

@@ -26,16 +26,18 @@ function App() {
 
       <Form location={location} setLocation={setLocation} />
 
-      <div className="app">
-        {cities.map((city, index) => (
-          <WeatherCard key={index} data={city} imagesObject={imagesObject} />
-        ))}
+      <div>
         <Location
           data={cities}
           location={location}
           setLocation={setLocation}
           imagesObject={imagesObject}
         />
+      </div>
+      <div className="app">
+        {cities.map((city, index) => (
+          <WeatherCard key={index} data={city} imagesObject={imagesObject} />
+        ))}
       </div>
     </>
   );
