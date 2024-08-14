@@ -7,6 +7,7 @@ import sunny from "./assets/Sunny.svg";
 import cloudy from "./assets/Cloudy.svg";
 import partlyCloudy from "./assets/PartlyCloudy.svg";
 import rainy from "./assets/Rainy.svg";
+import Form from "./components/Form";
 
 function App() {
   const [location, setLocation] = useState("London");
@@ -22,6 +23,9 @@ function App() {
     <>
       <h1 className="title">REACTIVE WEATHER</h1>
       <h3 className="subtitle">Up to the minute weather news</h3>
+
+      <Form location={location} setLocation={setLocation} />
+
       <div className="app">
         {cities.map((city, index) => (
           <WeatherCard key={index} data={city} imagesObject={imagesObject} />
