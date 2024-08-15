@@ -1,37 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function Location({ data, location, setLocation, imagesObject }) {
-  let cityObject;
+  const [cityObjectFromApi, setCityObjectFromApi] = useState(null);
 
-  data.forEach((city) => {
-    if (city.city === location) {
-      cityObject = city;
+  const weatherApi = {
+    key: "5898d1f46544d841eac1352fba609ade",
+    baseUrl: "https://api.openweathermap.org/data/2.5/",
+  };
+
+  let myUrl = `${weatherApi.baseUrl}weather?q=${location}&units=metric&appid=${weatherApi.key}`;
+
+  // console.log(myUrl);
+
+  useEffect(() => {
+    async function fetchDataFromApi(url) {
+      const response = await fetch(url);
+      const data = await response.json();
+      setCityObjectFromApi(data);
     }
-  });
 
-  return cityObject ? (
+    fetchDataFromApi(myUrl);
+  }, [location, myUrl]);
+
+  // console.log(cityObjectFromApi);
+
+  if (!cityObjectFromApi) {
+    return <div>Loading...</div>; // Render loading state if data is not yet available
+  }
+
+  return (
     <div className="current-location-card">
       <h2>Your Location's Weather</h2>
       <div className="img-container">
         <img
           className="card-img-top"
-          src={
-            Object.hasOwn(imagesObject, cityObject.forecast.toLowerCase())
-              ? imagesObject[cityObject.forecast.toLowerCase()]
-              : ""
-          }
+          src={`https://openweathermap.org/img/wn/${cityObjectFromApi.weather[0].icon}@2x.png`}
           alt="Card image cap"
           id="icon"
         />
       </div>
       <div className="card-body">
-        <h3 className="card-title">{cityObject.city}</h3>
-        <h5 className="card-text">{cityObject.temperature}</h5>
-        <h5 className="card-text">{cityObject.forecast}</h5>
+        <h3 className="card-title">{cityObjectFromApi.name}</h3>
+        <h5 className="card-text">{cityObjectFromApi.main.temp}</h5>
+        <h5 className="card-text">
+          {cityObjectFromApi.weather[0].description}
+        </h5>
       </div>
     </div>
-  ) : (
-    <h2 className="error-msg">This location is not in our database.</h2>
   );
 }
 
